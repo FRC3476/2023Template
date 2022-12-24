@@ -17,7 +17,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -756,17 +755,6 @@ public final class Drive extends AbstractSubsystem {
     public double getModulePosition(int moduleNumber) {
         return (swerveMotors[moduleNumber].getSelectedSensorPosition() / FALCON_ENCODER_TICKS_PER_ROTATIONS)
                 * SWERVE_METER_PER_ROTATION;
-    }
-
-    @Contract(pure = true)
-    public SwerveModulePosition @NotNull [] getModulePositions() {
-        SwerveModulePosition[] swerveModulePositions = new SwerveModulePosition[4];
-        for (int i = 0; i < 4; i++) {
-            swerveModulePositions[i] = new SwerveModulePosition(
-                    getModulePosition(i),
-                    new Rotation2d(getWheelRotation(i)));
-        }
-        return swerveModulePositions;
     }
 
     @Contract(pure = true)

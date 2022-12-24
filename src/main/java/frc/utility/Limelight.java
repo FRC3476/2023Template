@@ -1,7 +1,6 @@
 package frc.utility;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEvent;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import frc.subsytem.AbstractSubsystem;
@@ -9,7 +8,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2d;
 
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -80,11 +78,6 @@ public final class Limelight extends AbstractSubsystem {
 
     @Override
     public void logData() {
-
-    }
-
-    @Override
-    public void close() throws Exception {
 
     }
 
@@ -162,9 +155,6 @@ public final class Limelight extends AbstractSubsystem {
         super(-1);
         limelightTable = NetworkTableInstance.getDefault().getTable(name);
         limelightGuiTable = NetworkTableInstance.getDefault().getTable(name + "gui");
-
-        NetworkTableInstance.getDefault().addListener(limelightTable.getEntry("tl"),
-                EnumSet.of(NetworkTableEvent.Kind.kValueRemote), event -> lastUpdate = Timer.getFPGATimestamp());
     }
 
 

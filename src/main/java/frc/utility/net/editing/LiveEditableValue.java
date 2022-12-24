@@ -1,11 +1,9 @@
 package frc.utility.net.editing;
 
+import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableEvent;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumSet;
 import java.util.function.Function;
 
 public class LiveEditableValue<T> {
@@ -27,8 +25,8 @@ public class LiveEditableValue<T> {
         this.value = defaultValue;
         this.entry = entry;
         entry.setValue(onWrite.apply(defaultValue));
-        NetworkTableInstance.getDefault().addListener(entry, EnumSet.of(NetworkTableEvent.Kind.kValueRemote),
-                (NetworkTableEvent) -> value = onNTChange.apply(entry.getValue()));
+        entry.addListener((event -> onNTChange.apply(event.value)),
+                EntryListenerFlags.kNew | EntryListenerFlags.kImmediate | EntryListenerFlags.kUpdate);
     }
 
     /**
